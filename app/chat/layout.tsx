@@ -6,6 +6,6 @@ export default function ChatLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col justify-center h-screen">{children}</div>
+    <div className="flex flex-col h-screen">{children}</div>
   );
 }

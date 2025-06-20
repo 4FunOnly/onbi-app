@@ -19,7 +19,7 @@ export default function ChatInput({
   isLoading: boolean;
 }) {
   return (
-    <div className="bg-white px-4 pt-4 border-gray-200 md:w-[768px] w-full mx-auto">
+    <div className="sticky bottom-0 bg-white px-4 pt-4 border-t border-gray-200 md:w-[768px] w-full mx-auto z-10">
       <form>
         <div
           className="flex flex-col items-start gap-2 rounded-[24px] border border-gray-300 bg-white
