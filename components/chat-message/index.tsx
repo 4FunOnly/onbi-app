@@ -2,7 +2,7 @@ import { Message } from '@/ui/chat';
 import React from 'react';
 import MarkdownRenderer from '../markdown-renderer';
 
-export default function ChatMessage({ fromUser, text }: Message) {
+export default function ChatMessage({ id, fromUser, text }: Message) {
   return (
     <div className={`flex ${fromUser ? 'justify-end' : 'justify-start'}`}>
       <div
