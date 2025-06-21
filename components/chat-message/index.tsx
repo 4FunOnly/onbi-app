@@ -4,15 +4,11 @@ import MarkdownRenderer from '../markdown-renderer';
 
 export default function ChatMessage({ fromUser, text }: Message) {
   return (
-    <div className={`flex ${fromUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex ${fromUser ? 'justify-end' : 'justify-start'} px-4`}>
       <div
-        className={`relative ${
-          fromUser ? 'px-5 max-w-[70%]' : 'max-w-[95%]'
-        } py-3 text-sm leading-snug ${
-          fromUser
-            ? 'bg-[#e9e9e9] text-gray-800'
-            : 'bg-transparent text-gray-800'
-        } rounded-2xl`}
+        className={`relative py-3 px-5 text-sm leading-snug rounded-2xl
+          ${fromUser ? 'max-w-[70%] bg-[#e9e9e9] text-gray-800' : 'max-w-[85%] bg-gray-100 text-gray-800'}
+        `}
       >
         <MarkdownRenderer content={text} />
       </div>

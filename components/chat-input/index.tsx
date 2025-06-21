@@ -18,9 +18,18 @@ export default function ChatInput({
   onSubmit: (data: string) => void;
   isLoading: boolean;
 }) {
+  const [input, setInput] = useState('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    onSubmit(input);
+    setInput('');
+  };
+
   return (
     <div className="sticky bottom-0 bg-white px-4 pt-4 border-t border-gray-200 md:w-[768px] w-full mx-auto z-10">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div
           className="flex flex-col items-start gap-2 rounded-[24px] border border-gray-300 bg-white
           px-4 py-4 shadow-sm h-auto max-h-[200px] overflow-clip
@@ -32,6 +41,8 @@ export default function ChatInput({
               placeholder="Ask anything"
               className="resize-none text-sm placeholder-gray-400 focus:outline-none w-full overflow-y-auto max-h-[150px]"
               rows={2}
+              value={input}
+              onChange={e => setInput(e.target.value)}
             />
           </div>
           <div className="flex justify-between-w-full">
