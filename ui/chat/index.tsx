@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Sidebar from '@/components/sidebar/Sidebar';
 import { env } from '@/libs/env';
 import Image from 'next/image';
+import ChatFaq from '@/components/chat-faq';
 export interface Message {
   id: number | string;
   text: string;
@@ -25,6 +26,7 @@ export default function Chat() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -83,7 +85,7 @@ export default function Chat() {
       }
       setIsLoading(false);
     },
-    [messages, isLoading]
+    [messages]
   );
 
   return (

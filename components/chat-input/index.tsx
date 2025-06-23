@@ -1,7 +1,12 @@
 'use client';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import './ChatInput.css';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import TextareaAutosize from 'react-textarea-autosize';
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { suggestions } from '@/libs/suggestion';
 
 export default function ChatInput({
   onSubmit,
@@ -11,6 +16,7 @@ export default function ChatInput({
   isLoading: boolean;
 }) {
   const [text, setText] = useState('');
+
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
@@ -33,8 +39,25 @@ export default function ChatInput({
     handleSubmit();
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    onSubmit(suggestion);
+  };
+
   return (
-    <div className="sticky bottom-0 md:w-[768px] w-full mx-auto z-10">
+    <div className="sticky bottom-0 w-[390px] md:w-[768px] mx-auto z-10">
+      {/* 1. Bar Rekomendasi yang Bisa Digeser */}
+      <div className="suggestion-bar">
+        {suggestions.map((item, index) => (
+          <button
+            key={index}
+            className="suggestion-item"
+            onClick={() => handleSuggestionClick(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
       <form>
         <div
           className="flex items-center gap-2 rounded-[32px] bg-white
