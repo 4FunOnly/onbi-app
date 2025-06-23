@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
+import './markdown.style.css';
 import ReactMarkdown, { Components } from 'react-markdown';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
+import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 
 interface Props {
@@ -23,6 +25,13 @@ const components: Components = {
           🔗
         </a>
       </h2>
+    );
+  },
+  ol({ children }) {
+    return (
+      <ol className="ml-5" style={{ listStyle: 'decimal' }}>
+        {children}
+      </ol>
     );
   },
   table({ children }) {
@@ -57,7 +66,7 @@ export default function MarkdownRenderer({ content }: Props) {
   return (
     <div className="prose max-w-none">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkBreaks]}
         rehypePlugins={[
           rehypeSlug,
           [rehypeAutolinkHeadings, { behaviour: 'wrap' }],

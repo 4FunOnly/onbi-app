@@ -1,15 +1,7 @@
 'use client';
-import {
-  ArrowUpIcon,
-  EllipsisHorizontalIcon,
-  GlobeAltIcon,
-  MicrophoneIcon,
-  PhotoIcon,
-  PlusIcon,
-  SparklesIcon,
-  StopIcon,
-} from '@heroicons/react/24/outline';
-import React, { useState } from 'react';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import TextareaAutosize from 'react-textarea-autosize';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 
 export default function ChatInput({
   onSubmit,
@@ -18,80 +10,63 @@ export default function ChatInput({
   onSubmit: (data: string) => void;
   isLoading: boolean;
 }) {
+  const [text, setText] = useState('');
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (!text.trim()) return;
+    onSubmit(text);
+    setText('');
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleSubmit();
+  };
+
   return (
-    <div className="sticky bottom-0 bg-white px-4 pt-4 border-t border-gray-200 md:w-[768px] w-full mx-auto z-10">
+    <div className="sticky bottom-0 md:w-[768px] w-full mx-auto z-10">
       <form>
         <div
-          className="flex flex-col items-start gap-2 rounded-[24px] border border-gray-300 bg-white
-          px-4 py-4 shadow-sm h-auto max-h-[200px] overflow-clip
+          className="flex items-center gap-2 rounded-[32px] bg-white
+          shadow-sm overflow-clip
           w-full cursor-text justify-center bg-clip-padding contain-inline-size
           sm:shadow-lg"
         >
-          <div className="[scrollbar-width:thin] w-full default-browser">
-            <textarea
-              placeholder="Ask anything"
-              className="resize-none text-sm placeholder-gray-400 focus:outline-none w-full overflow-y-auto max-h-[150px]"
-              rows={2}
+          <div className="[scrollbar-width:thin] w-full default-browser ml-3">
+            <TextareaAutosize
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              value={text}
+              placeholder="Tanya ONBI"
+              className="resize-none text-sm placeholder-gray-400 focus:outline-none w-full overflow-y-auto ml-4 pt-4 flex items-center justify-center"
+              minRows={2}
+              maxRows={10}
             />
           </div>
-          <div className="flex justify-between-w-full">
-            <div className="flex gap-2">
-              <button
-                type="button"
-                className="p-2 rounded-full hover:bg-gray-100 border-gray-100 border"
-              >
-                <PlusIcon className="h-5 w-5 text-gray-500" />
-              </button>
-              <button
-                type="button"
-                className="p-2 rounded-full hover:bg-gray-100 border-gray-100 border"
-              >
-                <GlobeAltIcon className="h-5 w-5 text-gray-500" />
-              </button>
-              <button
-                type="button"
-                className="p-2 rounded-full hover:bg-gray-100 border-gray-100 border"
-              >
-                <SparklesIcon className="h-5 w-5 text-gray-500" />
-              </button>
-              <button
-                type="button"
-                className="p-2 rounded-full hover:bg-gray-100 border-gray-100 border"
-              >
-                <PhotoIcon className="h-5 w-5 text-gray-500" />
-              </button>
-              <button
-                type="button"
-                className="p-2 rounded-full hover:bg-gray-100 border-gray-100 border"
-              >
-                <EllipsisHorizontalIcon className="h-5 w-5 text-gray-500" />
-              </button>
-            </div>
-            <div className="flex flex-row-reverse gap-4">
-              <button
-                type="submit"
-                className="p-2 rounded-full bg-black hover:bg-black/70 text-white border border-gray-100"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <StopIcon className="h-5 w-5" />
-                ) : (
-                  <ArrowUpIcon className="h-5 w-5 font-semibold" />
-                )}
-              </button>
-              <button
-                type="button"
-                className="p-2 rounded-full hover:bg-gray-100 border border-gray-100"
-              >
-                <MicrophoneIcon className="h-5 w-5 text-gray-500" />
-              </button>
-            </div>
+          <div className="flex ">
+            <button
+              type="button"
+              className="py-4 px-4 mr-1 rounded-full cursor-pointer hover:bg-orange-800 border-gray-100 border bg-orange-400"
+              onClick={handleClick}
+            >
+              <ArrowRightIcon className="h-5 w-5 text-white" />
+            </button>
           </div>
         </div>
       </form>
       <p className="text-[12px] text-center text-gray-500 py-2">
         ONBI can make mistakes. Check important info.{' '}
-        <a href="https://chatgpt.com" className="underline">
+        <a href="https://www.bni.co.id/id-id/" className="underline">
           Set Cookie Preferences.
         </a>
       </p>
